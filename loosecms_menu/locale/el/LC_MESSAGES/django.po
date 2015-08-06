@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-04 17:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:9 models.py:22
+msgid "title"
+msgstr "τίτλος"
+
+#: models.py:10
+msgid "Give the name of the menu."
+msgstr "Δώστε το όνομα του διαχειριστή μενού."
+
+#: models.py:15 models.py:32
+msgid "published"
+msgstr "δημοσίευση"
+
+#: models.py:23
+#, fuzzy
+msgid "Give the name of the menu entry."
+msgstr "Δώστε το όνομα του διαχειριστή μενού."
+
+#: models.py:24
+msgid "page"
+msgstr "σελίδα"
+
+#: models.py:25
+msgid "Select the page to refer this menu entry."
+msgstr "Επιλέξτε την σελίδα στην οποία θα αναφέρετε το συγκεκριμένο μενού."
+
+#: models.py:26
+msgid "href"
+msgstr "εξωτερικός σύνδεσμος"
+
+#: models.py:27
+msgid "Give the external url if this menu entry open external site."
+msgstr ""
+"Δώστε τον εξωτερικό σύνδεσμο εάν το συγκεκριμένο μενού οδηγεί σε εξωτερική "
+"σελίδα."
+
+#: models.py:28
+msgid "manager"
+msgstr "διαχειριστής"
+
+#: models.py:29
+msgid "Select the menu manager to attach this menu entry."
+msgstr ""
+"Επιλέξτε το διαχειριστή μενού στον οποίο θα προστεθεί το συγκεκριμένο μενού."
+
+#: models.py:30
+msgid "order"
+msgstr "σειρά εμφάνισης"

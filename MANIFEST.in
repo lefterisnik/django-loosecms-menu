@@ -1,0 +1,4 @@
+include LICENSE
+include README.rst
+recursive-include loosecms_menu/locale *
+recursive-include loosecms_menu/templates *
