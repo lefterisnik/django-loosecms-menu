@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="navbar {% if menumanager.inverse %}navbar-inverse{% else%}navbar-default{% endif %} {{ menumanager.style }}" role="navigation">
     {% if menumanager.style == 'navbar-fixed-top' or menumanager.style == 'navbar-fixed-bottom' %}
         <div class="container">
@@ -9,7 +11,15 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'pages-home' %}">{{ menumanager.title }}</a>
+            {% if menumanager.brand_image %}
+            <a class="navbar-brand" href="{% url 'pages-home' %}">
+                <img alt="{{ menumanager.brand_title }}" src="{{ menumanager.brand_image.url }}" height="{{ menumanager.brand_image_height }}" >
+            </a>
+            {% elif menumanager.brand_title %}
+            <a class="navbar-brand" href="{% url 'pages-home' %}">
+                {{ menumanager.title }}
+            </a>
+            {% endif %}
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -38,12 +48,14 @@
                     {% endwith %}
                 {% endfor %}
             </ul>
-            <form class="navbar-form navbar-right" role="Search" action="/search/" method="get">
+            {% if menumanager.search %}
+            <form class="navbar-form navbar-right" role="Search" action="{{ menumanager.search_page.get_absolute_url }}" method="get">
                 <div class="form-group">
-                    <input type="text" name="q" class="form-control" placeholder="Αναζήτηση">
+                    <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %}">
                 </div>
                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
             </form>
+            {% endif %}
         </div><!-- end nav-collapse -->
     {% if menumanager.style == 'navbar-fixed-top' or menumanager.style == 'navbar-fixed-bottom' %}
         </div>

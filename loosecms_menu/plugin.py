@@ -26,9 +26,22 @@ class MenuPlugin(PluginModelAdmin):
         MenuInline,
     ]
     extra_initial_help = None
+    fieldsets = (
+        (None, {
+            'fields': ('type', 'placeholder', 'title', 'style', 'inverse', 'published')
+        }),
+        ('Brand options',{
+            'fields': ('brand_title', ('brand_image', 'brand_image_height'))
+        }),
+        ('Search options',{
+            'fields': ('search', 'search_page')
+        })
+    )
 
     def render(self, context, manager):
-        menus = Menu.objects.select_related('page').filter(manager=manager).order_by('order').prefetch_related('menu_set')
+        menus = Menu.objects.select_related('page').filter(manager=manager, published=True)\
+                                                   .order_by('order')\
+                                                   .prefetch_related('menu_set')
 
         t = loader.get_template(self.template)
         context['menus'] = menus
