@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="navbar {% if menumanager.inverse %}navbar-inverse{% else%}navbar-default{% endif %} {{ menumanager.style }}" role="navigation">
+<div class="navbar {% if menumanager.inverse %}navbar-inverse{% else %}navbar-default{% endif %} {{ menumanager.style }}" role="navigation">
     {% if menumanager.style == 'navbar-fixed-top' or menumanager.style == 'navbar-fixed-bottom' %}
         <div class="container">
     {% endif %}
@@ -17,7 +17,7 @@
             </a>
             {% elif menumanager.brand_title %}
             <a class="navbar-brand" href="{% url 'pages-home' %}">
-                {{ menumanager.title }}
+                {{ menumanager.brand_title }}
             </a>
             {% endif %}
         </div>

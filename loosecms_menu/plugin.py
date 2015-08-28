@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from django.template import loader
 
 from .models import MenuManager, Menu
 from .forms import MenuManagerForm, MenuForm
@@ -38,15 +37,13 @@ class MenuPlugin(PluginModelAdmin):
         })
     )
 
-    def render(self, context, manager):
+    def update_context(self, context, manager):
         menus = Menu.objects.select_related('page').filter(manager=manager, published=True)\
                                                    .order_by('order')\
                                                    .prefetch_related('menu_set')
-
-        t = loader.get_template(self.template)
         context['menus'] = menus
         context['menumanager'] = manager
-        return t.render(context)
+        return context
 
     def get_changeform_initial_data(self, request):
         initial = {}
