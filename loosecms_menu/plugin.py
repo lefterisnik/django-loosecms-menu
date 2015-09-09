@@ -2,8 +2,8 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 
-from .models import MenuManager, Menu
-from .forms import MenuManagerForm, MenuForm
+from .models import *
+from .forms import MenuForm
 
 from loosecms.plugin_pool import plugin_pool
 from loosecms.plugin_modeladmin import PluginModelAdmin
@@ -15,24 +15,24 @@ class MenuInline(admin.StackedInline):
     extra = 1
 
 
-class MenuPlugin(PluginModelAdmin):
+class MenuManagerPlugin(PluginModelAdmin):
     model = MenuManager
     name = _('Menu')
-    form = MenuManagerForm
     template = "plugin/menu.html"
     plugin = True
     inlines = [
         MenuInline,
     ]
-    extra_initial_help = None
     fieldsets = (
         (None, {
             'fields': ('type', 'placeholder', 'title', 'style', 'inverse', 'published')
         }),
         ('Brand options',{
+            'classes': ('collapse',),
             'fields': ('brand_title', ('brand_image', 'brand_image_height'))
         }),
         ('Search options',{
+            'classes': ('collapse',),
             'fields': ('search', 'search_page')
         })
     )
@@ -45,15 +45,4 @@ class MenuPlugin(PluginModelAdmin):
         context['menumanager'] = manager
         return context
 
-    def get_changeform_initial_data(self, request):
-        initial = {}
-        if self.extra_initial_help:
-            initial['type'] = self.extra_initial_help['type']
-            initial['placeholder'] = self.extra_initial_help['placeholder']
-            initial['manager'] = self.extra_initial_help['page']
-
-            return initial
-        else:
-            return {'type': 'MenuPlugin'}
-
-plugin_pool.register_plugin(MenuPlugin)
+plugin_pool.register_plugin(MenuManagerPlugin)

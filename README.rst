@@ -27,7 +27,7 @@ Quick Start
         'loosecms_menu',
     )
     
-3. Run `python manage.py migrate` to create the loosecms_text models.
+3. Run `python manage.py migrate` to create the loosecms_menu models.
 
 4. Run development server `python manage.py runserver` and visit http://127.0.0.1:8000/ to start
    playing with the cms.

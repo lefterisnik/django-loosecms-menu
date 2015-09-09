@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Menu, MenuManager
-from loosecms.forms import PluginForm
+from .models import Menu
 
 
-class MenuManagerForm(PluginForm):
-
-    class Meta(PluginForm.Meta):
-        model = MenuManager
-
-
+#TODO: Move to model class
 class MenuForm(forms.ModelForm):
 
     class Meta:

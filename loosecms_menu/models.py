@@ -6,6 +6,8 @@ from loosecms.models import Plugin, HtmlPage
 
 
 class MenuManager(Plugin):
+    default_type = 'MenuManagerPlugin'
+
     choices = (
         ('navbar-fixed-top', _('Fixed to top')),
         ('navbar-fixed-bottom', _('Fixed to bottom')),
@@ -13,13 +15,13 @@ class MenuManager(Plugin):
 
     title = models.CharField(_('title'), max_length=200,
                              help_text=_('Give a name for the menu manager.'))
-    brand_title = models.CharField(_('brand title'), max_length=50, blank=True,
+    brand_title = models.CharField(_('brand title'), max_length=50, blank=True, default='My Site',
                                    help_text=_('Give the brand name of your site.'))
     brand_image = models.ImageField(_('brand image'), upload_to='images', blank=True,
                                     help_text=_('Upload the brand image'))
     brand_image_height = models.IntegerField(_('image height'), blank=True, default=20,
                                              help_text=_('Set the height of the image'))
-    search = models.BooleanField(_('search'), default=True,
+    search = models.BooleanField(_('search'), default=False,
                                  help_text=_('Check this box if you like to appear a search box'))
     search_page = models.ForeignKey(HtmlPage, verbose_name=_('search_page'), blank=True, null=True,
                                     limit_choices_to={'is_template':False},
