@@ -50,7 +50,7 @@ class MenuManager(Plugin):
         if self.search and not self.search_page:
             msg_search = _('With checked the search box you should provide a page to show the results.')
             msg_search_page = _('You should provide a page to show the results.')
-            raise ValidationError({'search':msg_search,'search_page': msg_search_page })
+            raise ValidationError({'search': msg_search, 'search_page': msg_search_page })
 
 
 class Menu(models.Model):
@@ -61,7 +61,7 @@ class Menu(models.Model):
                              help_text=_('Select the page to refer this menu entry.'))
     parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'),
                                help_text=_('If the menuitem is submenu select the parent menuitem.'))
-    href = models.CharField(_('href'), max_length=50, null=True, blank=True,
+    href = models.CharField(_('href'), max_length=50, blank=True,
                             help_text=_('Give the external url if this menu entry open external site.'))
     manager = models.ForeignKey(MenuManager, verbose_name=_('manager'),
                                 help_text=_('Select the menu manager to attach this menu entry.'))
@@ -71,3 +71,21 @@ class Menu(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def clean(self):
+        """
+        Don't allow menu entries have the same order
+        :return: cleaned_data and errors
+        """
+        if not self.page and not self.href:
+            msg = _('You must provide at least one of the page or href field')
+            raise  ValidationError({'page': msg, 'href': msg})
+
+        if self.manager_id:
+            menus = Menu.objects.filter(manager=self.manager)
+
+            for menu in menus:
+                if self.order == menu.order and self.parent == menu.parent and self.pk != menu.pk:
+                    msg = _('In this place a menu entry is already exist. Please change the order.')
+                    raise ValidationError({'order': msg})
+

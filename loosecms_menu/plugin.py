@@ -3,7 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 
 from .models import *
-from .forms import MenuForm
 
 from loosecms.plugin_pool import plugin_pool
 from loosecms.plugin_modeladmin import PluginModelAdmin
@@ -11,8 +10,12 @@ from loosecms.plugin_modeladmin import PluginModelAdmin
 
 class MenuInline(admin.StackedInline):
     model = Menu
-    form = MenuForm
-    extra = 1
+    extra = 0
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "parent":
+            kwargs["queryset"] = Menu.objects.filter(parent=None)
+        return super(MenuInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class MenuManagerPlugin(PluginModelAdmin):
