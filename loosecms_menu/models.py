@@ -72,6 +72,10 @@ class Menu(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        verbose_name = _('menu')
+        verbose_name_plural = _('menus')
+
     def clean(self):
         """
         Don't allow menu entries have the same order
@@ -88,4 +92,30 @@ class Menu(models.Model):
                 if self.order == menu.order and self.parent == menu.parent and self.pk != menu.pk:
                     msg = _('In this place a menu entry is already exist. Please change the order.')
                     raise ValidationError({'order': msg})
+
+    def decrease_order(self):
+        old_order = self.order
+        self.older = None
+        self.save()
+
+        menu = Menu.objects.get(manager=self.manager, parent=self.parent, order=old_order-1)
+        if menu:
+            menu.order += 1
+            menu.save()
+
+        self.order = old_order-1
+        self.save()
+
+    def increase_order(self):
+        old_order = self.order
+        self.older = None
+        self.save()
+
+        menu = Menu.objects.get(manager=self.manager, parent=self.parent, order=old_order+1)
+        if menu:
+            menu.order -= 1
+            menu.save()
+
+        self.order = old_order+1
+        self.save()
 
