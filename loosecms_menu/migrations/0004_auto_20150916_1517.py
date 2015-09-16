@@ -11,12 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='menumanager',
-            name='slug',
-            field=models.SlugField(default='asdasdadasd', help_text='Give a slug for the menu manager', unique=True, verbose_name='slug'),
-            preserve_default=False,
-        ),
         migrations.AlterField(
             model_name='menumanager',
             name='title',

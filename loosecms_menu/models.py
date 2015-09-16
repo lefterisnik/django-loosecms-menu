@@ -21,7 +21,7 @@ class MenuManager(Plugin):
     title = models.CharField(_('title'), max_length=100, unique=True,
                              help_text=_('Give a name for the menu manager.'))
     slug = models.SlugField(_('slug'), unique=True,
-                            help_text=_('Give a slug for the menu manager'))
+                            help_text=_('Give a slug for the menu manager.'))
     brand_title = models.CharField(_('brand title'), max_length=50, blank=True, default='My Site',
                                    help_text=_('Give the brand name of your site.'))
     brand_image = models.ImageField(_('brand image'), upload_to='images', blank=True,
