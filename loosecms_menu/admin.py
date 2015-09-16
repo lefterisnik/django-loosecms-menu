@@ -13,6 +13,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ('title', 'manager', 'parent', 'page', 'href', 'get_move', 'published')
     list_editable = ('published',)
     search_fields = ('title',)
+    list_select_related = ('parent', 'page', 'manager')
     ordering = ('parent', 'order')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -27,29 +28,25 @@ class MenuAdmin(admin.ModelAdmin):
         :return: html
         """
         button = u'<a href="%s"><span class="glyphicon glyphicon-arrow-%s"></span></a>'
-        html = None
-        # TODO: Avoid this query
-        menus_with_same_parent = self.model.objects.filter(parent=obj.parent).exclude(pk=obj.pk)
+        html = ''
 
-        if menus_with_same_parent.count() != 0:
-            if obj.order != 0:
+        if not obj.is_alone:
+            if not obj.is_first:
                 link = '%d/move_up/' % obj.pk
                 html = button % (link, 'up')
 
-            if menus_with_same_parent.count() != obj.order:
+            if not obj.is_last:
                 link = '%d/move_down/' % obj.pk
                 if html:
                     html += button % (link, 'down')
                 else:
                     html = button % (link, 'down')
-            return html
-        return ''
+        return html
 
     get_move.allow_tags = True
     get_move.short_description = _('Move')
 
     def get_urls(self):
-        admin_view = self.admin_site.admin_view
         urls = [
             url(r'^(?P<pk>\d+)/move_up/$', self.admin_site.admin_view(self.move_up)),
             url(r'^(?P<pk>\d+)/move_down/$', self.admin_site.admin_view(self.move_down)),
