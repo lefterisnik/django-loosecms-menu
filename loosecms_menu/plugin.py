@@ -33,7 +33,7 @@ class MenuManagerPlugin(PluginModelAdmin):
         }),
         ('Brand options',{
             'classes': ('collapse',),
-            'fields': ('brand_title', ('brand_image', 'brand_image_height'))
+            'fields': ('brand_title', 'brand_image', 'brand_image_height')
         }),
         ('Search options',{
             'classes': ('collapse',),
