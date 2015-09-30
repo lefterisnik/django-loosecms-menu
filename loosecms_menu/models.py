@@ -66,7 +66,7 @@ class Menu(models.Model):
     page = models.ForeignKey(HtmlPage, null=True, blank=True, verbose_name=_('page'),
                              limit_choices_to={'is_template':False},
                              help_text=_('Select the page to refer this menu entry.'))
-    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'),
+    parent = models.ForeignKey('self', null=True, blank=True, verbose_name=_('parent'), related_name='submenus',
                                help_text=_('If the menuitem is submenu select the parent menuitem.'))
     href = models.CharField(_('href'), max_length=50, blank=True,
                             help_text=_('Give the external url if this menu entry open external site.'))

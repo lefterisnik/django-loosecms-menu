@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext_lazy as _
+import operator
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 
@@ -41,9 +42,11 @@ class MenuManagerPlugin(PluginModelAdmin):
     )
 
     def update_context(self, context, manager):
-        menus = Menu.objects.select_related('page').filter(manager=manager, published=True)\
-                                                   .order_by('order')\
-                                                   .prefetch_related('menu_set')
+        #TODO: This plugin make 4 queries. Must reduced.
+        menus = Menu.objects.prefetch_related('submenus__page').select_related('page', 'parent')\
+            .filter(manager=manager, published=True, parent=None)\
+            .order_by('parent', 'order')
+
         context['menus'] = menus
         context['menumanager'] = manager
         return context
