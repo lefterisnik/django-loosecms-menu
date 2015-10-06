@@ -38,6 +38,10 @@ class MenuManagerPlugin(PluginModelAdmin):
         ('Search options',{
             'classes': ('collapse',),
             'fields': ('search', 'search_page')
+        }),
+        ('Language options',{
+            'classes': ('collapse',),
+            'fields': ('language', )
         })
     )
 

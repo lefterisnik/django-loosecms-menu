@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 from django.db.models import Max, Min
 from django.db.models.signals import post_delete
 from django.core.exceptions import ValidationError
@@ -28,6 +29,9 @@ class MenuManager(Plugin):
                                     help_text=_('Upload the brand image'))
     brand_image_height = models.IntegerField(_('image height'), blank=True, default=20,
                                              help_text=_('Set the height of the image'))
+    language = models.BooleanField(_('language'), default=False,
+                                   help_text=_('Check this box if you like to appear a select box with available '
+                                               'languages.'))
     search = models.BooleanField(_('search'), default=False,
                                  help_text=_('Check this box if you like to appear a search box'))
     search_page = models.ForeignKey(HtmlPage, verbose_name=_('search_page'), blank=True, null=True,
@@ -58,6 +62,13 @@ class MenuManager(Plugin):
             msg_search = _('With checked the search box you should provide a page to show the results.')
             msg_search_page = _('You should provide a page to show the results.')
             raise ValidationError({'search': msg_search, 'search_page': msg_search_page })
+
+        if self.language:
+            i18n_enable = getattr(settings, 'USE_I18N', False)
+            if not i18n_enable:
+                msg = _("Django Loose CMS requires 'USE_I18N' to be True in setting file in order to enable this "
+                        "field.")
+                raise ValidationError({'language': msg})
 
 
 class Menu(models.Model):
