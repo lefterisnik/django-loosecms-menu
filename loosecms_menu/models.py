@@ -156,7 +156,7 @@ class Menu(models.Model):
                 menus_with_same_parent.filter(is_last=True).update(is_last=False)
             elif self.order <= menu_order['min_order']:
                 self.is_first = True
-                menus_with_same_parent.get(is_last=True).update(is_first=False)
+                menus_with_same_parent.filter(is_first=True).update(is_first=False)
             else:
                 self.is_last = False
                 self.is_first = False
